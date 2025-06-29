@@ -4,7 +4,9 @@ import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants, type ButtonVariants } from '@/lib/variants'
 
-interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag' | 'onDragStart' | 'onDragEnd'>, ButtonVariants {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration'
+>, ButtonVariants {
   loading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
@@ -13,6 +15,15 @@ interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onD
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, loading, leftIcon, rightIcon, animated = true, children, disabled, ...props }, ref) => {
+    const buttonContent = (
+      <>
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
+        {children}
+        {!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
+      </>
+    )
+
     if (animated) {
       return (
         <motion.button
@@ -23,10 +34,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           whileTap={{ scale: 0.98 }}
           {...props}
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
-          {children}
-          {!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
+          {buttonContent}
         </motion.button>
       )
     }
@@ -38,10 +46,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         {...props}
       >
-        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        {!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
-        {children}
-        {!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
+        {buttonContent}
       </button>
     )
   }

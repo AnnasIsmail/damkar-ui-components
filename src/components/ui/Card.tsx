@@ -3,7 +3,9 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { cardVariants, type CardVariants } from '@/lib/variants'
 
-interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrag' | 'onDragStart' | 'onDragEnd'>, CardVariants {
+interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration'
+>, CardVariants {
   animated?: boolean
 }
 
