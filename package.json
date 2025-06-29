@@ -1,0 +1,44 @@
+{
+  "name": "damkar-ui-components",
+  "version": "1.0.0",
+  "description": "Deskripsi package Anda",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "vitest",
+    "prepublishOnly": "npm run build",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "library"
+  ],
+  "author": "Annas Ismail annasismailmuhammad@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/package-name.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/package-name/issues"
+  },
+  "homepage": "https://github.com/username/package-name#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.9.6",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3"
+  }
+}
