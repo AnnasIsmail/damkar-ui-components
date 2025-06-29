@@ -3,30 +3,36 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { cardVariants, type CardVariants } from '@/lib/variants'
 
-interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrag'>, CardVariants {
+interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrag' | 'onDragStart' | 'onDragEnd'>, CardVariants {
   animated?: boolean
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant, padding, animated = false, children, ...props }, ref) => {
-    const Component = animated ? motion.div : 'div'
-    
-    const motionProps = animated ? {
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      whileHover: { y: -2 },
-      transition: { duration: 0.2 }
-    } : {}
+    if (animated) {
+      return (
+        <motion.div
+          ref={ref}
+          className={cn(cardVariants({ variant, padding, className }))}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.2 }}
+          {...props}
+        >
+          {children}
+        </motion.div>
+      )
+    }
     
     return (
-      <Component
+      <div
         ref={ref}
         className={cn(cardVariants({ variant, padding, className }))}
-        {...motionProps}
         {...props}
       >
         {children}
-      </Component>
+      </div>
     )
   }
 )
