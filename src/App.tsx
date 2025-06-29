@@ -13,6 +13,7 @@ import { FormInput } from './components/forms/FormInput'
 import { StatusBadge } from './components/data/StatusBadge'
 import { ThemeProvider } from './providers/ThemeProvider'
 import { ToastProvider, useToastActions } from './components/ui/Toast'
+import { PageContainer } from './components/layout/PageContainer'
 
 // Import pages
 import { LLMChatPage } from './pages/LLMChatPage'
@@ -90,12 +91,15 @@ function DemoContent() {
         return <AnalyticsPage />
       default:
         return (
-          <main className="flex-1 p-6 space-y-8 overflow-y-auto">
+          <PageContainer 
+            title="Damkar UI Components" 
+            description="Production-ready React component library for AI platforms"
+          >
             {/* Hero Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center space-y-4"
+              className="text-center space-y-4 mb-8"
             >
               <div className="flex items-center justify-center gap-3 mb-6">
                 <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-primary text-primary-foreground shadow-lg">
@@ -125,7 +129,7 @@ function DemoContent() {
             </motion.div>
 
             {/* Component Showcase */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
               {/* AI Components */}
               <Card animated>
                 <CardHeader>
@@ -311,7 +315,7 @@ function DemoContent() {
                 </motion.div>
               ))}
             </motion.div>
-          </main>
+          </PageContainer>
         )
     }
   }
