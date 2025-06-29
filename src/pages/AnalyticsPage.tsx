@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   BarChart3, 
@@ -9,7 +9,6 @@ import {
   DollarSign,
   Calendar,
   Download,
-  Filter,
   RefreshCw
 } from 'lucide-react'
 import { PageContainer } from '../components/layout/PageContainer'

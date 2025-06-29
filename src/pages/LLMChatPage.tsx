@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Bot, User, Sparkles, Zap, Copy } from 'lucide-react'
 import { PageContainer } from '../components/layout/PageContainer'

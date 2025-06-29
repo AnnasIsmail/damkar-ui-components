@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Settings, 
@@ -19,7 +19,6 @@ import {
   Camera,
   Upload,
   Check,
-  X,
   Smartphone,
   Mail,
   Lock,
@@ -347,6 +346,7 @@ export function SettingsPage() {
                       </div>
                     )}
                   </Button>
+                
                 </motion.div>
               ))}
             </div>

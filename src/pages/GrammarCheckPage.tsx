@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle, AlertTriangle, Copy, Download, FileText } from 'lucide-react'
 import { PageContainer } from '../components/layout/PageContainer'

@@ -1,10 +1,10 @@
-import React, { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants, type ButtonVariants } from '@/lib/variants'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariants {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag'>, ButtonVariants {
   loading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
@@ -15,13 +15,17 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, loading, leftIcon, rightIcon, animated = true, children, disabled, ...props }, ref) => {
     const Component = animated ? motion.button : 'button'
     
+    const motionProps = animated ? {
+      whileHover: { scale: 1.02 },
+      whileTap: { scale: 0.98 }
+    } : {}
+    
     return (
       <Component
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={disabled || loading}
-        whileHover={animated ? { scale: 1.02 } : undefined}
-        whileTap={animated ? { scale: 0.98 } : undefined}
+        {...motionProps}
         {...props}
       >
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

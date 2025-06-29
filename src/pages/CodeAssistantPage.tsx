@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Code, Play, Copy, Download, Terminal, FileCode } from 'lucide-react'
+import { Code, Copy, Download, Terminal, FileCode } from 'lucide-react'
 import { PageContainer } from '../components/layout/PageContainer'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'

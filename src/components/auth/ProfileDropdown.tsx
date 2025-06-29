@@ -1,5 +1,4 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { 
   User, 
   Settings, 
@@ -55,17 +54,6 @@ export function ProfileDropdown({
         return <Badge variant="success" className="text-xs">Enterprise</Badge>
       default:
         return <Badge variant="secondary" className="text-xs">Free</Badge>
-    }
-  }
-
-  const getThemeIcon = () => {
-    switch (theme) {
-      case 'light':
-        return <Sun className="w-4 h-4" />
-      case 'dark':
-        return <Moon className="w-4 h-4" />
-      default:
-        return <Monitor className="w-4 h-4" />
     }
   }
 

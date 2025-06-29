@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, CheckCircle, AlertTriangle, AlertCircle, Info, Flame } from 'lucide-react'
+import { X, CheckCircle, AlertTriangle, AlertCircle, Info } from 'lucide-react'
 import { Button } from './Button'
 import { cn, generateId } from '@/lib/utils'
 

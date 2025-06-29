@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import { AlertCircle, CheckCircle } from 'lucide-react'
 import { Input, type InputProps } from '../ui/Input'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import { Zap, AlertTriangle, DollarSign } from 'lucide-react'
 import { Badge } from '../ui/Badge'
@@ -24,8 +23,8 @@ export function TokenCounter({
   const estimatedCost = estimateCost(tokenCount, modelPricing.input)
   const percentage = (tokenCount / maxTokens) * 100
   
-  const getStatusColor = () => {
-    if (percentage >= 90) return 'error'
+  const getStatusColor = (): 'destructive' | 'warning' | 'success' => {
+    if (percentage >= 90) return 'destructive'
     if (percentage >= 75) return 'warning'
     return 'success'
   }
@@ -72,7 +71,7 @@ export function TokenCounter({
             transition={{ duration: 0.5 }}
             className={cn(
               'h-2 rounded-full transition-colors',
-              statusColor === 'error' ? 'bg-error-500' :
+              statusColor === 'destructive' ? 'bg-error-500' :
               statusColor === 'warning' ? 'bg-warning-500' : 'bg-success-500'
             )}
           />
