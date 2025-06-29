@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Bell, 
   X, 
   Check, 
   Trash2, 
-  Settings, 
-  MoreVertical,
+  Settings,
   AlertCircle,
   CheckCircle,
   Info,
   AlertTriangle,
   Zap,
-  User,
   CreditCard,
   Shield,
   Clock,

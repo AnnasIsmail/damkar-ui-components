@@ -1,14 +1,15 @@
-import React, { InputHTMLAttributes, forwardRef } from 'react'
+import { InputHTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 import { inputVariants, type InputVariants } from '@/lib/variants'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>, InputVariants {
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>, Omit<InputVariants, 'size'> {
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  inputSize?: InputVariants['size']
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, size, type, leftIcon, rightIcon, ...props }, ref) => {
+  ({ className, variant, inputSize, type, leftIcon, rightIcon, ...props }, ref) => {
     if (leftIcon || rightIcon) {
       return (
         <div className="relative">
@@ -20,7 +21,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             type={type}
             className={cn(
-              inputVariants({ variant, size }),
+              inputVariants({ variant, size: inputSize }),
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',
               className
@@ -40,7 +41,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         type={type}
-        className={cn(inputVariants({ variant, size }), className)}
+        className={cn(inputVariants({ variant, size: inputSize }), className)}
         ref={ref}
         {...props}
       />

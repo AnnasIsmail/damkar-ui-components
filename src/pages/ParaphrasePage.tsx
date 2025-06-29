@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { RefreshCw, Copy, Download, Wand2, Sparkles } from 'lucide-react'
 import { PageContainer } from '../components/layout/PageContainer'

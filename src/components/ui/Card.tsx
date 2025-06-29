@@ -1,28 +1,40 @@
-import React, { HTMLAttributes, forwardRef } from 'react'
+import { HTMLAttributes, forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { cardVariants, type CardVariants } from '@/lib/variants'
 
-interface CardProps extends HTMLAttributes<HTMLDivElement>, CardVariants {
+interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration'
+>, CardVariants {
   animated?: boolean
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant, padding, animated = false, children, ...props }, ref) => {
-    const Component = animated ? motion.div : 'div'
+    if (animated) {
+      return (
+        <motion.div
+          ref={ref}
+          className={cn(cardVariants({ variant, padding, className }))}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.2 }}
+          {...props}
+        >
+          {children}
+        </motion.div>
+      )
+    }
     
     return (
-      <Component
+      <div
         ref={ref}
         className={cn(cardVariants({ variant, padding, className }))}
-        initial={animated ? { opacity: 0, y: 20 } : undefined}
-        animate={animated ? { opacity: 1, y: 0 } : undefined}
-        whileHover={animated ? { y: -2 } : undefined}
-        transition={animated ? { duration: 0.2 } : undefined}
         {...props}
       >
         {children}
-      </Component>
+      </div>
     )
   }
 )
