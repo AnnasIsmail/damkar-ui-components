@@ -71,8 +71,8 @@ export function TokenCounter({
             transition={{ duration: 0.5 }}
             className={cn(
               'h-2 rounded-full transition-colors',
-              statusColor === 'destructive' ? 'bg-error-500' :
-              statusColor === 'warning' ? 'bg-warning-500' : 'bg-success-500'
+              statusColor === 'destructive' ? 'bg-red-500' :
+              statusColor === 'warning' ? 'bg-yellow-500' : 'bg-green-500'
             )}
           />
         </div>

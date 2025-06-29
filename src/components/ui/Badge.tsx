@@ -1,9 +1,9 @@
-import React, { HTMLAttributes, forwardRef } from 'react'
+import { HTMLAttributes, forwardRef, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { badgeVariants, type BadgeVariants } from '@/lib/variants'
 
 interface BadgeProps extends HTMLAttributes<HTMLDivElement>, BadgeVariants {
-  icon?: React.ReactNode
+  icon?: ReactNode
 }
 
 const Badge = forwardRef<HTMLDivElement, BadgeProps>(

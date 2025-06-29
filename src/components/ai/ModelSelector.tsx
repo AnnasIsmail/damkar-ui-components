@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronDown, Zap, Clock, DollarSign, CheckCircle } from 'lucide-react'
 import { Button } from '../ui/Button'
@@ -19,7 +19,7 @@ export function ModelSelector({
   onModelSelect,
   className 
 }: ModelSelectorProps) {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const selected = models.find(model => model.id === selectedModel)
 
   return (

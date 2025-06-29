@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Clock, Flame, FileText, Code, CheckCircle } from 'lucide-react'
+import { Search, Clock } from 'lucide-react'
 import { Input } from '../ui/Input'
 import { Badge } from '../ui/Badge'
 import { cn } from '@/lib/utils'
@@ -10,7 +10,7 @@ interface SearchResult {
   title: string
   description: string
   type: 'conversation' | 'model' | 'command' | 'page'
-  icon: React.ReactNode
+  icon: ReactNode
   url?: string
   action?: () => void
 }
@@ -20,49 +20,8 @@ interface SearchBarProps {
   onResultSelect?: (result: SearchResult) => void
   placeholder?: string
   className?: string
+  results?: SearchResult[]
 }
-
-const mockResults: SearchResult[] = [
-  {
-    id: '1',
-    title: 'LLM Chat',
-    description: 'Start a new conversation with AI models',
-    type: 'page',
-    icon: <Flame className="w-4 h-4" />,
-    url: '/llm'
-  },
-  {
-    id: '2',
-    title: 'Code Assistant',
-    description: 'Get help with programming tasks',
-    type: 'page',
-    icon: <Code className="w-4 h-4" />,
-    url: '/code'
-  },
-  {
-    id: '3',
-    title: 'Paraphrase Tool',
-    description: 'Rewrite and improve your text',
-    type: 'page',
-    icon: <FileText className="w-4 h-4" />,
-    url: '/paraphrase'
-  },
-  {
-    id: '4',
-    title: 'Grammar Check',
-    description: 'Check and correct grammar mistakes',
-    type: 'page',
-    icon: <CheckCircle className="w-4 h-4" />,
-    url: '/grammar'
-  },
-  {
-    id: '5',
-    title: 'GPT-4 Turbo',
-    description: 'OpenAI\'s most capable model',
-    type: 'model',
-    icon: <Flame className="w-4 h-4" />
-  }
-]
 
 const typeColors = {
   conversation: 'info',
@@ -74,29 +33,15 @@ const typeColors = {
 export function SearchBar({ 
   onSearch, 
   onResultSelect, 
-  placeholder = "Search conversations, models, or commands...",
-  className 
+  placeholder = "Search...",
+  className,
+  results = []
 }: SearchBarProps) {
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const [results, setResults] = useState<SearchResult[]>([])
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const searchRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  // Filter results based on query
-  useEffect(() => {
-    if (query.trim()) {
-      const filtered = mockResults.filter(result =>
-        result.title.toLowerCase().includes(query.toLowerCase()) ||
-        result.description.toLowerCase().includes(query.toLowerCase())
-      )
-      setResults(filtered)
-      setSelectedIndex(-1)
-    } else {
-      setResults([])
-    }
-  }, [query])
 
   // Handle click outside
   useEffect(() => {
@@ -148,14 +93,6 @@ export function SearchBar({
     setQuery('')
     setIsOpen(false)
     
-    // Navigate to URL if provided
-    if (result.url) {
-      console.log(`Navigating to: ${result.url}`)
-      // In a real app, you would use your router here
-      // router.push(result.url)
-    }
-    
-    // Execute action if provided
     if (result.action) {
       result.action()
     }
@@ -225,27 +162,12 @@ export function SearchBar({
               <div className="p-4 text-center text-muted-foreground">
                 <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />
                 <p>No results found for "{query}"</p>
-                <p className="text-xs mt-1">Try searching for conversations, models, or commands</p>
               </div>
             ) : (
               <div className="p-4">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                   <Clock className="w-4 h-4" />
-                  <span>Recent searches</span>
-                </div>
-                <div className="space-y-1">
-                  {mockResults.slice(0, 3).map((result) => (
-                    <button
-                      key={result.id}
-                      onClick={() => handleResultSelect(result)}
-                      className="w-full flex items-center gap-3 p-2 rounded-md text-left hover:bg-accent transition-colors"
-                    >
-                      <div className="flex-shrink-0 text-muted-foreground">
-                        {result.icon}
-                      </div>
-                      <span className="text-sm">{result.title}</span>
-                    </button>
-                  ))}
+                  <span>Start typing to search</span>
                 </div>
               </div>
             )}

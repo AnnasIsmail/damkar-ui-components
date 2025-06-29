@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useRef, useEffect } from 'react'
+import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -10,7 +10,7 @@ interface DropdownContextType {
 const DropdownContext = createContext<DropdownContextType | undefined>(undefined)
 
 interface DropdownMenuProps {
-  children: React.ReactNode
+  children: ReactNode
   onOpenChange?: (open: boolean) => void
 }
 
@@ -32,7 +32,7 @@ export function DropdownMenu({ children, onOpenChange }: DropdownMenuProps) {
 }
 
 interface DropdownMenuTriggerProps {
-  children: React.ReactNode
+  children: ReactNode
   asChild?: boolean
   className?: string
 }
@@ -68,7 +68,7 @@ export function DropdownMenuTrigger({ children, asChild, className }: DropdownMe
 }
 
 interface DropdownMenuContentProps {
-  children: React.ReactNode
+  children: ReactNode
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'right' | 'bottom' | 'left'
   className?: string
@@ -139,7 +139,7 @@ export function DropdownMenuContent({
 }
 
 interface DropdownMenuItemProps {
-  children: React.ReactNode
+  children: ReactNode
   onClick?: () => void
   disabled?: boolean
   className?: string
@@ -188,7 +188,7 @@ export function DropdownMenuLabel({
   children, 
   className 
 }: { 
-  children: React.ReactNode
+  children: ReactNode
   className?: string 
 }) {
   return (
