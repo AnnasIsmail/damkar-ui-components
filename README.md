@@ -156,25 +156,36 @@ If you want a different package name, update `package.json`:
 ### Basic Usage
 
 ```tsx
-import { Button, Card, Badge } from '@damkar/ui'
+import { Button, Card, Badge, Alert } from '@damkar/ui'
+import { AlertTriangle } from 'lucide-react'
 
 function MyComponent() {
   return (
-    <Card>
-      <Card.Header>
-        <Card.Title>Welcome to Damkar UI</Card.Title>
-        <Card.Description>
-          Beautiful components for modern applications
-        </Card.Description>
-      </Card.Header>
-      <Card.Content>
-        <div className="flex gap-2">
-          <Button>Primary Button</Button>
-          <Button variant="outline">Secondary</Button>
-          <Badge variant="success">Active</Badge>
-        </div>
-      </Card.Content>
-    </Card>
+    <div className="space-y-4">
+      <Card>
+        <Card.Header>
+          <Card.Title>Welcome to Damkar UI</Card.Title>
+          <Card.Description>
+            Beautiful components for modern applications
+          </Card.Description>
+        </Card.Header>
+        <Card.Content>
+          <div className="flex gap-2">
+            <Button>Primary Button</Button>
+            <Button variant="outline">Secondary</Button>
+            <Badge variant="success">Active</Badge>
+          </div>
+        </Card.Content>
+      </Card>
+
+      <Alert variant="warning">
+        <AlertTriangle className="h-4 w-4" />
+        <Alert.Title>Warning</Alert.Title>
+        <Alert.Description>
+          This is a warning alert message.
+        </Alert.Description>
+      </Alert>
+    </div>
   )
 }
 ```
@@ -220,6 +231,35 @@ function AIInterface() {
 }
 ```
 
+## 📋 Available Components
+
+### Core UI Components
+- **Button** - Versatile button with multiple variants and loading states
+- **Card** - Flexible container with header, content, and footer sections
+- **Badge** - Small status indicators and labels
+- **Input** - Enhanced input with icons and validation states
+- **Textarea** - Multi-line text input
+- **Alert** - Contextual feedback messages with variants
+- **DropdownMenu** - Accessible dropdown menu system
+- **Toast** - Non-intrusive notification system
+
+### AI-Specific Components
+- **ModelSelector** - Advanced AI model selection with pricing information
+- **TokenCounter** - Real-time token counting and cost estimation
+
+### Form Components
+- **FormInput** - Complete form input with label, validation, and helper text
+
+### Data Components
+- **StatusBadge** - Status indicators with optional pulse animation
+
+### Layout Components
+- **LoadingSpinner** - Elegant loading indicators
+- **PageContainer** - Consistent page layout wrapper
+
+### Navigation Components
+- **SearchBar** - Advanced search with autocomplete functionality
+
 ## 📋 Migration Guide
 
 ### From v1.0.x to v1.1.x
@@ -247,6 +287,7 @@ function AIInterface() {
 #### New Features
 
 - ✨ AI-specific components (ModelSelector, TokenCounter)
+- 🚨 Alert component with multiple variants
 - 🎨 Enhanced theming system
 - 📱 Better responsive design
 - ⚡ Improved animations

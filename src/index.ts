@@ -13,6 +13,7 @@ export {
   DropdownMenuLabel 
 } from './components/ui/DropdownMenu'
 export { ToastProvider, useToast, useToastActions } from './components/ui/Toast'
+export { Alert, AlertDescription, AlertTitle, type AlertProps } from './components/ui/Alert'
 
 // AI Components
 export { ModelSelector } from './components/ai/ModelSelector'
@@ -36,7 +37,7 @@ export { ThemeProvider, useTheme } from './providers/ThemeProvider'
 
 // Utilities
 export { cn, formatCurrency, formatNumber, formatDate, formatRelativeTime, debounce, throttle, generateId, copyToClipboard, isValidEmail, isValidPassword, sanitizeHtml, truncateText, calculateTokens, estimateCost, parseJWT, sleep } from './lib/utils'
-export { buttonVariants, inputVariants, cardVariants, badgeVariants, type ButtonVariants, type InputVariants, type CardVariants, type BadgeVariants } from './lib/variants'
+export { buttonVariants, inputVariants, cardVariants, badgeVariants, alertVariants, type ButtonVariants, type InputVariants, type CardVariants, type BadgeVariants, type AlertVariants } from './lib/variants'
 export { animations, pageTransitions, modalTransitions, loadingSpinner, pulseAnimation } from './lib/animations'
 
 // Types
