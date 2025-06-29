@@ -109,147 +109,149 @@ export function GrammarCheckPage() {
   }
 
   return (
-    <PageContainer 
-      title="Grammar Check" 
-      description="Check and correct grammar, spelling, and style issues in your text"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Input Section */}
-        <Card className="lg:col-span-2 shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-primary" />
-              Text Input
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-6">
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                Enter your text to check
-              </label>
-              <textarea
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder="Paste or type your text here..."
-                className="w-full h-40 p-3 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                <span>{inputText.length} characters</span>
-                <span>{inputText.split(' ').filter(w => w.length > 0).length} words</span>
-              </div>
-            </div>
-
-            <Button 
-              onClick={handleCheckGrammar}
-              disabled={!inputText.trim() || isLoading}
-              loading={isLoading}
-              leftIcon={<CheckCircle className="w-4 h-4" />}
-              className="w-full"
-            >
-              {isLoading ? 'Checking Grammar...' : 'Check Grammar'}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Issues Panel */}
-        <Card className="shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-500" />
-              Issues Found
-              {errors.length > 0 && (
-                <Badge variant="destructive">{errors.length}</Badge>
-              )}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-4">
-            {errors.length > 0 ? (
-              <div className="space-y-3">
-                {errors.map((error) => (
-                  <motion.div
-                    key={error.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="p-3 border rounded-md space-y-2"
-                  >
-                    <div className="flex items-center gap-2">
-                      {getErrorIcon(error.severity)}
-                      {getErrorBadge(error.type)}
-                    </div>
-                    <p className="text-sm font-medium">{error.message}</p>
-                    <p className="text-xs text-muted-foreground">{error.suggestion}</p>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center text-muted-foreground py-8">
-                <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">No issues found yet</p>
-                <p className="text-xs">Check your text to see results</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Corrected Text */}
-        <Card className="lg:col-span-3 shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <div className="flex items-center justify-between">
+    <div className="h-full overflow-y-auto">
+      <PageContainer 
+        title="Grammar Check" 
+        description="Check and correct grammar, spelling, and style issues in your text"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Input Section */}
+          <Card className="lg:col-span-2 shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
               <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                Corrected Text
+                <FileText className="w-5 h-5 text-primary" />
+                Text Input
               </CardTitle>
-              {correctedText && (
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCopy}
-                    leftIcon={<Copy className="w-4 h-4" />}
-                  >
-                    Copy
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleDownload}
-                    leftIcon={<Download className="w-4 h-4" />}
-                  >
-                    Download
-                  </Button>
+            </CardHeader>
+            <CardContent className="space-y-4 p-6">
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Enter your text to check
+                </label>
+                <textarea
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Paste or type your text here..."
+                  className="w-full h-40 p-3 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  <span>{inputText.length} characters</span>
+                  <span>{inputText.split(' ').filter(w => w.length > 0).length} words</span>
+                </div>
+              </div>
+
+              <Button 
+                onClick={handleCheckGrammar}
+                disabled={!inputText.trim() || isLoading}
+                loading={isLoading}
+                leftIcon={<CheckCircle className="w-4 h-4" />}
+                className="w-full"
+              >
+                {isLoading ? 'Checking Grammar...' : 'Check Grammar'}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Issues Panel */}
+          <Card className="shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
+              <CardTitle className="flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                Issues Found
+                {errors.length > 0 && (
+                  <Badge variant="destructive">{errors.length}</Badge>
+                )}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4">
+              {errors.length > 0 ? (
+                <div className="space-y-3">
+                  {errors.map((error) => (
+                    <motion.div
+                      key={error.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="p-3 border rounded-md space-y-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        {getErrorIcon(error.severity)}
+                        {getErrorBadge(error.type)}
+                      </div>
+                      <p className="text-sm font-medium">{error.message}</p>
+                      <p className="text-xs text-muted-foreground">{error.suggestion}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-muted-foreground py-8">
+                  <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No issues found yet</p>
+                  <p className="text-xs">Check your text to see results</p>
                 </div>
               )}
-            </div>
-          </CardHeader>
-          <CardContent className="p-6">
-            {isLoading ? (
-              <div className="flex items-center justify-center h-32">
-                <LoadingSpinner text="Checking your grammar..." />
+            </CardContent>
+          </Card>
+
+          {/* Corrected Text */}
+          <Card className="lg:col-span-3 shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  Corrected Text
+                </CardTitle>
+                {correctedText && (
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopy}
+                      leftIcon={<Copy className="w-4 h-4" />}
+                    >
+                      Copy
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleDownload}
+                      leftIcon={<Download className="w-4 h-4" />}
+                    >
+                      Download
+                    </Button>
+                  </div>
+                )}
               </div>
-            ) : correctedText ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
-                <div className="p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                  <p className="text-sm leading-relaxed">{correctedText}</p>
+            </CardHeader>
+            <CardContent className="p-6">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-32">
+                  <LoadingSpinner text="Checking your grammar..." />
                 </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{correctedText.length} characters</span>
-                  <span>{correctedText.split(' ').filter(w => w.length > 0).length} words</span>
+              ) : correctedText ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-4"
+                >
+                  <div className="p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                    <p className="text-sm leading-relaxed">{correctedText}</p>
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{correctedText.length} characters</span>
+                    <span>{correctedText.split(' ').filter(w => w.length > 0).length} words</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="text-center text-muted-foreground py-12">
+                  <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>Your corrected text will appear here</p>
+                  <p className="text-xs mt-1">Enter some text and click "Check Grammar" to get started</p>
                 </div>
-              </motion.div>
-            ) : (
-              <div className="text-center text-muted-foreground py-12">
-                <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Your corrected text will appear here</p>
-                <p className="text-xs mt-1">Enter some text and click "Check Grammar" to get started</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </PageContainer>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </PageContainer>
+    </div>
   )
 }

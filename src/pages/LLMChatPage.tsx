@@ -89,168 +89,171 @@ export function LLMChatPage() {
   const selectedModelData = mockModels.find(m => m.id === selectedModel)
 
   return (
-    <PageContainer 
-      title="LLM Chat" 
-      description="Engage in conversations with advanced AI language models"
-    >
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-[calc(100vh-200px)]">
-        {/* Chat Area */}
-        <div className="xl:col-span-3 flex flex-col">
-          <Card className="flex-1 flex flex-col shadow-lg">
-            <CardHeader className="border-b border-border/50 bg-accent/30">
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-primary text-primary-foreground shadow-lg">
-                    <Bot className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-lg">AI Conversation</span>
-                    <p className="text-sm text-muted-foreground font-normal">
-                      Powered by {selectedModelData?.name}
-                    </p>
-                  </div>
-                </CardTitle>
-                <Badge variant="success" className="flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3" />
-                  Active
-                </Badge>
-              </div>
-            </CardHeader>
-            
-            <CardContent className="flex-1 flex flex-col p-0">
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                {messages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div className={`flex gap-4 max-w-[85%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${
-                        message.role === 'user' 
-                          ? 'bg-primary text-primary-foreground' 
-                          : 'bg-accent border border-border'
-                      }`}>
-                        {message.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
-                      </div>
-                      <div className={`rounded-2xl p-4 shadow-sm ${
-                        message.role === 'user'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-accent/50 border border-border/50'
-                      }`}>
-                        <p className="text-sm leading-relaxed">{message.content}</p>
-                        <div className="flex items-center justify-between mt-3 pt-2 border-t border-border/20">
-                          <div className="flex items-center gap-2 text-xs opacity-70">
-                            <Zap className="w-3 h-3" />
-                            <span>{message.tokens} tokens</span>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleCopyMessage(message.content)}
-                            className="h-6 w-6 p-0 hover:bg-white/20 dark:hover:bg-black/20"
-                          >
-                            <Copy className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-                
-                {isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex gap-4"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-accent border border-border flex items-center justify-center">
+    <div className="h-full overflow-hidden flex flex-col">
+      <PageContainer 
+        title="LLM Chat" 
+        description="Engage in conversations with advanced AI language models"
+        className="flex-1 flex flex-col"
+      >
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-full">
+          {/* Chat Area */}
+          <div className="xl:col-span-3 flex flex-col h-full">
+            <Card className="flex-1 flex flex-col shadow-lg">
+              <CardHeader className="border-b border-border/50 bg-accent/30">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary text-primary-foreground shadow-lg">
                       <Bot className="w-5 h-5" />
                     </div>
-                    <div className="bg-accent/50 border border-border/50 rounded-2xl p-4">
-                      <LoadingSpinner size="sm" text="Thinking..." />
+                    <div>
+                      <span className="text-lg">AI Conversation</span>
+                      <p className="text-sm text-muted-foreground font-normal">
+                        Powered by {selectedModelData?.name}
+                      </p>
                     </div>
-                  </motion.div>
-                )}
-              </div>
+                  </CardTitle>
+                  <Badge variant="success" className="flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3" />
+                    Active
+                  </Badge>
+                </div>
+              </CardHeader>
               
-              {/* Input Area */}
-              <div className="border-t border-border/50 p-6 bg-accent/20">
-                <div className="flex gap-3">
-                  <Input
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Type your message..."
-                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="flex-1"
-                  />
-                  <Button 
-                    onClick={handleSendMessage}
-                    disabled={!inputValue.trim() || isLoading}
-                    leftIcon={<Send className="w-4 h-4" />}
-                    className="px-6"
-                  >
-                    Send
-                  </Button>
+              <CardContent className="flex-1 flex flex-col p-0">
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                  {messages.map((message) => (
+                    <motion.div
+                      key={message.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`flex gap-4 max-w-[85%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${
+                          message.role === 'user' 
+                            ? 'bg-primary text-primary-foreground' 
+                            : 'bg-accent border border-border'
+                        }`}>
+                          {message.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
+                        </div>
+                        <div className={`rounded-2xl p-4 shadow-sm ${
+                          message.role === 'user'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-accent/50 border border-border/50'
+                        }`}>
+                          <p className="text-sm leading-relaxed">{message.content}</p>
+                          <div className="flex items-center justify-between mt-3 pt-2 border-t border-border/20">
+                            <div className="flex items-center gap-2 text-xs opacity-70">
+                              <Zap className="w-3 h-3" />
+                              <span>{message.tokens} tokens</span>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleCopyMessage(message.content)}
+                              className="h-6 w-6 p-0 hover:bg-white/20 dark:hover:bg-black/20"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {isLoading && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex gap-4"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-accent border border-border flex items-center justify-center">
+                        <Bot className="w-5 h-5" />
+                      </div>
+                      <div className="bg-accent/50 border border-border/50 rounded-2xl p-4">
+                        <LoadingSpinner size="sm" text="Thinking..." />
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                
+                {/* Input Area */}
+                <div className="border-t border-border/50 p-6 bg-accent/20">
+                  <div className="flex gap-3">
+                    <Input
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Type your message..."
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                      className="flex-1"
+                    />
+                    <Button 
+                      onClick={handleSendMessage}
+                      disabled={!inputValue.trim() || isLoading}
+                      leftIcon={<Send className="w-4 h-4" />}
+                      className="px-6"
+                    >
+                      Send
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-lg">Model Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <ModelSelector
-                models={mockModels}
-                selectedModel={selectedModel}
-                onModelSelect={setSelectedModel}
-              />
-              
-              <TokenCounter
-                text={inputValue}
-                modelPricing={selectedModelData ? {
-                  input: selectedModelData.inputPricing,
-                  output: selectedModelData.outputPricing
-                } : { input: 0.01, output: 0.03 }}
-                maxTokens={selectedModelData?.contextWindow || 4000}
-              />
-            </CardContent>
-          </Card>
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg">Model Settings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ModelSelector
+                  models={mockModels}
+                  selectedModel={selectedModel}
+                  onModelSelect={setSelectedModel}
+                />
+                
+                <TokenCounter
+                  text={inputValue}
+                  modelPricing={selectedModelData ? {
+                    input: selectedModelData.inputPricing,
+                    output: selectedModelData.outputPricing
+                  } : { input: 0.01, output: 0.03 }}
+                  maxTokens={selectedModelData?.contextWindow || 4000}
+                />
+              </CardContent>
+            </Card>
 
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-lg">Conversation Stats</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-accent/30">
-                  <span className="text-sm text-muted-foreground">Messages</span>
-                  <span className="font-semibold text-lg">{messages.length}</span>
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-lg">Conversation Stats</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 rounded-lg bg-accent/30">
+                    <span className="text-sm text-muted-foreground">Messages</span>
+                    <span className="font-semibold text-lg">{messages.length}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 rounded-lg bg-accent/30">
+                    <span className="text-sm text-muted-foreground">Total Tokens</span>
+                    <span className="font-semibold text-lg">
+                      {messages.reduce((sum, msg) => sum + msg.tokens, 0)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 rounded-lg bg-green-500/10">
+                    <span className="text-sm text-muted-foreground">Est. Cost</span>
+                    <span className="font-semibold text-lg text-green-600">
+                      ${(messages.reduce((sum, msg) => sum + msg.tokens, 0) * 0.01 / 1000).toFixed(4)}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-accent/30">
-                  <span className="text-sm text-muted-foreground">Total Tokens</span>
-                  <span className="font-semibold text-lg">
-                    {messages.reduce((sum, msg) => sum + msg.tokens, 0)}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-green-500/10">
-                  <span className="text-sm text-muted-foreground">Est. Cost</span>
-                  <span className="font-semibold text-lg text-green-600">
-                    ${(messages.reduce((sum, msg) => sum + msg.tokens, 0) * 0.01 / 1000).toFixed(4)}
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-    </PageContainer>
+      </PageContainer>
+    </div>
   )
 }

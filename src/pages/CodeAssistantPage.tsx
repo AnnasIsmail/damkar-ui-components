@@ -136,162 +136,164 @@ console.log('Code generated successfully');
   }
 
   return (
-    <PageContainer 
-      title="Code Assistant" 
-      description="Generate, debug, and optimize code with AI assistance"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Input Section */}
-        <Card className="lg:col-span-3 shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <CardTitle className="flex items-center gap-2">
-              <Terminal className="w-5 h-5 text-primary" />
-              Code Generation
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-6">
-            {/* Language Selection */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                Programming Language
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {languages.map((lang) => (
+    <div className="h-full overflow-y-auto">
+      <PageContainer 
+        title="Code Assistant" 
+        description="Generate, debug, and optimize code with AI assistance"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Input Section */}
+          <Card className="lg:col-span-3 shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
+              <CardTitle className="flex items-center gap-2">
+                <Terminal className="w-5 h-5 text-primary" />
+                Code Generation
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-6">
+              {/* Language Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Programming Language
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {languages.map((lang) => (
+                    <motion.button
+                      key={lang.id}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedLanguage(lang.id)}
+                      className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        selectedLanguage === lang.id
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted hover:bg-accent'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${lang.color}`} />
+                        {lang.name}
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Prompt Input */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Describe what you want to build
+                </label>
+                <textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="E.g., Create a function that validates email addresses..."
+                  className="w-full h-32 p-3 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+                />
+              </div>
+
+              <Button 
+                onClick={handleGenerateCode}
+                disabled={!prompt.trim() || isLoading}
+                loading={isLoading}
+                leftIcon={<Code className="w-4 h-4" />}
+                className="w-full"
+              >
+                {isLoading ? 'Generating Code...' : 'Generate Code'}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Templates Sidebar */}
+          <Card className="shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
+              <CardTitle className="text-lg">Quick Templates</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="space-y-2">
+                {codeTemplates.map((template) => (
                   <motion.button
-                    key={lang.id}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedLanguage(lang.id)}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                      selectedLanguage === lang.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted hover:bg-accent'
-                    }`}
+                    key={template.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleTemplateSelect(template)}
+                    className="w-full p-3 text-left rounded-md border hover:bg-accent transition-colors"
                   >
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${lang.color}`} />
-                      {lang.name}
+                    <div className="flex items-center gap-2 mb-1">
+                      <FileCode className="w-4 h-4 text-primary" />
+                      <span className="font-medium text-sm">{template.name}</span>
                     </div>
+                    <p className="text-xs text-muted-foreground">{template.description}</p>
                   </motion.button>
                 ))}
               </div>
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* Prompt Input */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                Describe what you want to build
-              </label>
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="E.g., Create a function that validates email addresses..."
-                className="w-full h-32 p-3 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-              />
-            </div>
-
-            <Button 
-              onClick={handleGenerateCode}
-              disabled={!prompt.trim() || isLoading}
-              loading={isLoading}
-              leftIcon={<Code className="w-4 h-4" />}
-              className="w-full"
-            >
-              {isLoading ? 'Generating Code...' : 'Generate Code'}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Templates Sidebar */}
-        <Card className="shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <CardTitle className="text-lg">Quick Templates</CardTitle>
-          </CardHeader>
-          <CardContent className="p-4">
-            <div className="space-y-2">
-              {codeTemplates.map((template) => (
-                <motion.button
-                  key={template.id}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleTemplateSelect(template)}
-                  className="w-full p-3 text-left rounded-md border hover:bg-accent transition-colors"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <FileCode className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-sm">{template.name}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{template.description}</p>
-                </motion.button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Generated Code */}
-        <Card className="lg:col-span-4 shadow-lg">
-          <CardHeader className="bg-accent/30 border-b border-border/50">
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2">
-                <Code className="w-5 h-5 text-success-500" />
-                Generated Code
+          {/* Generated Code */}
+          <Card className="lg:col-span-4 shadow-lg">
+            <CardHeader className="bg-accent/30 border-b border-border/50">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Code className="w-5 h-5 text-success-500" />
+                  Generated Code
+                  {generatedCode && (
+                    <Badge variant="success" className="ml-2">
+                      {languages.find(l => l.id === selectedLanguage)?.name}
+                    </Badge>
+                  )}
+                </CardTitle>
                 {generatedCode && (
-                  <Badge variant="success" className="ml-2">
-                    {languages.find(l => l.id === selectedLanguage)?.name}
-                  </Badge>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopyCode}
+                      leftIcon={<Copy className="w-4 h-4" />}
+                    >
+                      Copy
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleDownloadCode}
+                      leftIcon={<Download className="w-4 h-4" />}
+                    >
+                      Download
+                    </Button>
+                  </div>
                 )}
-              </CardTitle>
-              {generatedCode && (
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCopyCode}
-                    leftIcon={<Copy className="w-4 h-4" />}
-                  >
-                    Copy
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleDownloadCode}
-                    leftIcon={<Download className="w-4 h-4" />}
-                  >
-                    Download
-                  </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-64">
+                  <LoadingSpinner text="Generating your code..." />
+                </div>
+              ) : generatedCode ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-4"
+                >
+                  <pre className="bg-gray-900 dark:bg-gray-950 text-gray-100 p-4 rounded-md overflow-x-auto text-sm">
+                    <code>{generatedCode}</code>
+                  </pre>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{generatedCode.split('\n').length} lines</span>
+                    <span>{generatedCode.length} characters</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="text-center text-muted-foreground py-16">
+                  <Code className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg mb-2">Ready to generate code</p>
+                  <p className="text-sm">Describe what you want to build and select a programming language</p>
                 </div>
               )}
-            </div>
-          </CardHeader>
-          <CardContent className="p-6">
-            {isLoading ? (
-              <div className="flex items-center justify-center h-64">
-                <LoadingSpinner text="Generating your code..." />
-              </div>
-            ) : generatedCode ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
-                <pre className="bg-gray-900 dark:bg-gray-950 text-gray-100 p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{generatedCode}</code>
-                </pre>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{generatedCode.split('\n').length} lines</span>
-                  <span>{generatedCode.length} characters</span>
-                </div>
-              </motion.div>
-            ) : (
-              <div className="text-center text-muted-foreground py-16">
-                <Code className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <p className="text-lg mb-2">Ready to generate code</p>
-                <p className="text-sm">Describe what you want to build and select a programming language</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </PageContainer>
+            </CardContent>
+          </Card>
+        </div>
+      </PageContainer>
+    </div>
   )
 }
