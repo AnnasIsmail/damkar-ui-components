@@ -35,6 +35,7 @@ import { Input } from '../components/ui/Input'
 import { FormInput } from '../components/forms/FormInput'
 import { useTheme } from '../providers/ThemeProvider'
 import { useToastActions } from '../components/ui/Toast'
+import { cn } from '../lib/utils'
 
 interface SettingsSection {
   id: string
