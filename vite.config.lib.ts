@@ -5,10 +5,23 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      jsxRuntime: 'automatic'
+    }),
     dts({
       insertTypesEntry: true,
-      exclude: ['src/pages/**', 'src/App.tsx', 'src/main.tsx', '**/*.stories.tsx', '**/*.test.tsx']
+      exclude: [
+        'src/pages/**', 
+        'src/App.tsx', 
+        'src/main.tsx', 
+        '**/*.stories.tsx', 
+        '**/*.test.tsx',
+        'node_modules/**'
+      ],
+      compilerOptions: {
+        jsx: 'react-jsx',
+        moduleResolution: 'bundler'
+      }
     })
   ],
   build: {
@@ -19,11 +32,12 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'esm' : format}.js`
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         globals: {
           react: 'React',
-          'react-dom': 'ReactDOM'
+          'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'jsxRuntime'
         }
       }
     },
@@ -34,5 +48,8 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src')
     }
+  },
+  esbuild: {
+    jsx: 'automatic'
   }
 })
