@@ -110,6 +110,47 @@ function App() {
 }
 ```
 
+## 📦 Updating Existing Package
+
+If you've already published this package before, here are your options:
+
+### Option 1: Update Version (Recommended)
+
+```bash
+# Check current package status
+node scripts/check-package.js
+
+# Update version and publish
+npm run publish:patch  # for bug fixes (1.0.0 → 1.0.1)
+npm run publish:minor  # for new features (1.0.0 → 1.1.0)
+npm run publish:major  # for breaking changes (1.0.0 → 2.0.0)
+```
+
+### Option 2: Manual Version Update
+
+```bash
+# Update version manually
+npm version patch|minor|major
+
+# Build and publish
+npm run build:lib
+npm publish
+```
+
+### Option 3: Change Package Name
+
+If you want a different package name, update `package.json`:
+
+```json
+{
+  "name": "@your-org/ui-components",
+  // or
+  "name": "damkar-ui-components",
+  // or
+  "name": "@damkar/design-system"
+}
+```
+
 ## 🎨 Components
 
 ### Basic Usage
@@ -179,173 +220,72 @@ function AIInterface() {
 }
 ```
 
-### Form Components
+## 📋 Migration Guide
 
-```tsx
-import { FormInput, Button } from '@damkar/ui'
+### From v1.0.x to v1.1.x
 
-function LoginForm() {
-  return (
-    <form className="space-y-4">
-      <FormInput
-        label="Email"
-        type="email"
-        placeholder="Enter your email"
-        required
-      />
-      
-      <FormInput
-        label="Password"
-        type="password"
-        placeholder="Enter your password"
-        required
-      />
-      
-      <Button type="submit" className="w-full">
-        Sign In
-      </Button>
-    </form>
-  )
-}
-```
+#### Breaking Changes
 
-## 📚 Component Categories
+1. **Input Component**: `size` prop renamed to `inputSize`
+   ```tsx
+   // Before
+   <Input size="lg" />
+   
+   // After
+   <Input inputSize="lg" />
+   ```
 
-### 🎨 UI Components
-- **Button** - Versatile button with multiple variants and loading states
-- **Card** - Flexible container with header, content, and footer sections
-- **Badge** - Status indicators and labels with color variants
-- **Input** - Enhanced input with icons and validation states
-- **Textarea** - Multi-line text input with validation
+2. **Badge Component**: `error` variant renamed to `destructive`
+   ```tsx
+   // Before
+   <Badge variant="error" />
+   
+   // After
+   <Badge variant="destructive" />
+   ```
 
-### 🤖 AI Components
-- **ModelSelector** - Dropdown for selecting AI models with pricing info
-- **TokenCounter** - Real-time token counting and cost estimation
+#### New Features
 
-### 📝 Form Components
-- **FormInput** - Complete form input with label, validation, and helper text
+- ✨ AI-specific components (ModelSelector, TokenCounter)
+- 🎨 Enhanced theming system
+- 📱 Better responsive design
+- ⚡ Improved animations
 
-### 🎯 Data Components
-- **StatusBadge** - Status indicators with optional pulse animation
+## 🔧 Development
 
-### 🏗️ Layout Components
-- **LoadingSpinner** - Elegant loading indicators in multiple sizes
-- **PageContainer** - Consistent page layout wrapper
-
-### 🧭 Navigation Components
-- **SearchBar** - Advanced search with autocomplete and filtering
-
-## 🔧 API Reference
-
-### Button
-
-```tsx
-interface ButtonProps {
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
-  size?: 'default' | 'sm' | 'lg' | 'icon'
-  loading?: boolean
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-  animated?: boolean
-}
-```
-
-### Card
-
-```tsx
-interface CardProps {
-  variant?: 'default' | 'elevated' | 'outline' | 'ghost'
-  padding?: 'none' | 'sm' | 'default' | 'lg'
-  animated?: boolean
-}
-```
-
-### ModelSelector
-
-```tsx
-interface ModelSelectorProps {
-  models: AIModel[]
-  selectedModel?: string
-  onModelSelect: (modelId: string) => void
-}
-
-interface AIModel {
-  id: string
-  name: string
-  provider: string
-  description: string
-  inputPricing: number
-  outputPricing: number
-  contextWindow: number
-  capabilities: string[]
-  status: 'active' | 'maintenance' | 'deprecated'
-}
-```
-
-## 🎭 Theming
-
-### Custom Theme
-
-```tsx
-import { ThemeProvider } from '@damkar/ui'
-
-const customTheme = {
-  theme: 'dark',
-  primaryColor: '#f97316',
-  borderRadius: 8
-}
-
-function App() {
-  return (
-    <ThemeProvider defaultTheme="system">
-      {/* Your app */}
-    </ThemeProvider>
-  )
-}
-```
-
-### CSS Variables
-
-Customize the design system by overriding CSS variables:
-
-```css
-:root {
-  --primary: 24 100% 50%;        /* Orange primary */
-  --radius: 0.75rem;             /* Border radius */
-  --font-sans: 'Inter', sans-serif;
-}
-```
-
-## 🧪 Testing
-
-Components are thoroughly tested with Vitest and Testing Library:
+### Local Development
 
 ```bash
+# Clone repository
+git clone https://github.com/damkar/ui.git
+cd damkar-ui
+
+# Install dependencies
+npm install
+
+# Start development
+npm run dev
+
+# Run tests
 npm test
+
+# Build library
+npm run build:lib
 ```
 
-## 📖 Storybook
-
-Explore components interactively:
+### Release Process
 
 ```bash
-npm run storybook
+# Check package status
+node scripts/check-package.js
+
+# Create release (automatically runs tests, builds, and publishes)
+node scripts/release.js patch|minor|major
 ```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Framer Motion](https://www.framer.com/motion/) for smooth animations
-- [Lucide React](https://lucide.dev/) for beautiful icons
-- [Radix UI](https://www.radix-ui.com/) for accessibility primitives inspiration
 
 ---
 
