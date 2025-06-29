@@ -18,10 +18,7 @@ export default defineConfig({
         '**/*.test.tsx',
         'node_modules/**'
       ],
-      compilerOptions: {
-        jsx: 'react-jsx',
-        moduleResolution: 'bundler'
-      }
+      tsconfigPath: './tsconfig.lib.json'
     })
   ],
   build: {
