@@ -82,7 +82,7 @@ export function AppSidebar({
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
-          'fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] glass-effect border-r lg:relative lg:top-0 lg:h-screen',
+          'fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] glass-effect border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:relative lg:top-0 lg:h-[calc(100vh-4rem)]',
           className
         )}
       >

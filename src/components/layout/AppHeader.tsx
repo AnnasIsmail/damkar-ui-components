@@ -74,11 +74,11 @@ export function AppHeader({
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={cn(
-          'sticky top-0 z-50 w-full glass-effect border-b',
+          'fixed top-0 left-0 right-0 z-50 w-full h-16 glass-effect border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
           className
         )}
       >
-        <div className="container flex h-16 items-center justify-between px-6">
+        <div className="container flex h-full items-center justify-between px-6">
           {/* Left section */}
           <div className="flex items-center gap-4">
             <Button

@@ -90,7 +90,7 @@ function DemoContent() {
         return <AnalyticsPage />
       default:
         return (
-          <main className="flex-1 p-6 space-y-8">
+          <main className="flex-1 p-6 space-y-8 overflow-y-auto">
             {/* Hero Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -323,7 +323,8 @@ function DemoContent() {
         onSearch={handleSearch}
       />
       
-      <div className="flex">
+      {/* Main Layout with proper spacing for fixed header */}
+      <div className="flex pt-16">
         <AppSidebar 
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
@@ -331,7 +332,9 @@ function DemoContent() {
           onItemClick={handleSidebarItemClick}
         />
         
-        {renderPage()}
+        <div className="flex-1 min-h-[calc(100vh-4rem)]">
+          {renderPage()}
+        </div>
       </div>
     </div>
   )
